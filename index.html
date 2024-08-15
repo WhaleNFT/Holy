@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLY Token</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <script>
+               function updateData() {
+            $.ajax({
+                url: '/update_data',
+                method: 'GET',
+                success: function(data) {
+                    if (data) {
+
+                        $('.burned-amount').text(data['token_info']['Token Name and Symbol'][1][0]);
+                        $('.movable-liquidity').text(data['liquidity_info']);
+                        $('.movable-liquidity1').text(data['liquidity_info1']);
+                        $('.movable-liquidity2').text(data['liquidity_info2']);
+                        $('.movable-liquidity3').text(data['liquidity_info3']);
+                        $('.movable-liquidity4').text(data['liquidity_info4']);
+
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка при обновлении данных:', error);
+                }
+            });
+        }
+
+     function toggleTheme() {
+    $('body').toggleClass('white-theme');
+    localStorage.setItem('theme', $('body').hasClass('white-theme') ? 'white' : 'black');
+    updateHaloImage();
+}
+
+function updateHaloImage() {
+    if ($('body').hasClass('white-theme')) {
+        $('.halo-image').attr('src', '../static/12.png');
+    } else {
+        $('.halo-image').attr('src', '../static/1.png');
+    }
+}
+
+$(document).ready(function() {
+    updateData();
+
+    // Проверяем сохранённую тему
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'white') {
+        $('body').addClass('white-theme');
+    }
+
+    updateHaloImage();
+
+    // Обработчики кликов на кнопки переключения темы
+    $('#light-theme-button').on('click', function() {
+        $('body').addClass('white-theme');
+        localStorage.setItem('theme', 'white');
+        updateHaloImage();
+    });
+
+    $('#dark-theme-button').on('click', function() {
+        $('body').removeClass('white-theme');
+        localStorage.setItem('theme', 'black');
+        updateHaloImage();
+    });
+
+
+});
+
+    </script>
+
+    <style>
+
+        @font-face {
+            font-family: 'GeometricaSansBold';
+            src: url('../static/fonts/geometrica-sans-bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'HKGroteskLight';
+            src: url('../static/fonts/HKGrotesk-Light.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            src: url('../static/fonts/Inter-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        table tr:first-child {
+            border-bottom: 1px solid white;
+        }
+
+        .white-theme .top-buttons .button1 { background-image: url('../static/9.png'); }
+        .white-theme .top-buttons .button2 { background-image: url('../static/10.png'); }
+        .white-theme .top-buttons .button3 { background-image: url('../static/11.png'); }
+
+          .white-theme #light-theme-button {
+            background-image: url('../static/5.png');
+        }
+
+          .white-theme #dark-theme-button {
+            background-image: url('../static/7.png');
+        }
+
+        .white-theme {
+            background-color: white;
+            color: black;
+        }
+
+        .white-theme .buy-button {
+            border: 1px solid black;
+        }
+
+        .white-theme  .burned {
+            border: 1px solid black;
+        }
+
+        .white-theme table {
+            border: 1px solid black;
+        }
+
+        .white-theme th, .white-theme td {
+            border-color: black;
+        }
+
+        .white-theme table tr:first-child {
+            border-bottom: 1px solid black;
+        }
+        .white-theme a {
+            color: #ff4500;
+        }
+
+        .white-theme .buy-button a {
+            color: black;
+        }
+
+        .white-theme .buy-button a:hover {
+            color: #ffa500;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: -100px;
+        }
+
+        .header {
+            position: relative;
+            padding: 20px;
+        }
+
+        .theme-buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 999999;
+        }
+
+        .theme-buttons a {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 999999;
+        }
+
+        .theme-buttons a:hover {
+            transform: scale(1.1);
+        }
+
+        #light-theme-button {
+            background-image: url('../static/6.png');
+        }
+
+        #dark-theme-button {
+            background-image: url('../static/8.png');
+        }
+
+        .halo-image {
+            max-width: 350px;
+            position: relative;
+            top: 175px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-family: 'GeometricaSansBold', sans-serif;
+            font-size: 4rem;
+            margin-bottom: -15px;
+        }
+
+        p {
+            font-family: 'HKGroteskLight', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+
+        }
+
+        .burned, .buy-button {
+            font-family: 'Inter';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid white;
+            padding: 10px;
+            margin: 10px;
+            width: 267px;
+            height: 60px;
+        }
+
+        .burned-amount {
+            font-size: 2rem;
+            display: block;
+            font-family: 'GeometricaSansBold', sans-serif;
+        }
+
+        .burned-text {
+            font-size: 1rem;
+            display: block;
+        }
+
+        .buy-button {
+            position: relative;
+        }
+
+        .buy-button a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .buy-button a:hover {
+            color: #ffa500;
+        }
+
+        .buy-button img {
+            margin-left: 10px;
+            max-width: 30px;
+        }
+
+
+        .liquidity {
+            margin-top: -8px;
+        }
+
+        table {
+            font-family: 'HKGroteskLight', sans-serif;
+
+            min-width: 600px;
+            margin: 0 auto;
+            border: 1px solid white;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 2px;
+            padding-right: 25px;
+            padding-top: 0.1px;
+            text-align: left;
+        }
+
+        td {
+            padding: 2px;
+            padding-right: 25px;
+            padding-top: 0.1px;
+            text-align: left;
+        }
+
+        td1 {
+            padding: 2px;
+
+            padding-top: 0.1px;
+            text-align: left;
+            font-family: 'Inter';
+        }
+
+        th {
+            text-align: center;
+            padding-right: 80px;
+        }
+
+        td:last-child {
+            text-align: right;
+            padding-right: 25px;
+        }
+
+        th1 {
+            padding-left: 0px;
+            font-size: 0.65rem;
+        }
+
+        a {
+            color: #ffa500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .top-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 999999;
+        }
+
+        .top-buttons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            text-indent: -9999px;
+            transition: transform 0.3s ease;
+             z-index: 999999;
+        }
+
+        .top-buttons a:hover {
+            transform: scale(1.1);
+        }
+
+        .top-buttons .button1 { background-image: url('../static/2.png'); }
+        .top-buttons .button2 { background-image: url('../static/3.png'); }
+        .top-buttons .button3 { background-image: url('../static/4.png'); }
+
+        .movable-liquidity  .movable-liquidity0 .movable-liquidity1 .movable-liquidity2 .movable-liquidity3 .movable-liquidity4 .movable-liquidity5 {
+            position: relative;
+            left: 33px;
+            font-size: 1rem;
+        }
+
+        .movable-liquidity0  {
+            position: relative;
+            left: 5px;
+            font-size: 1rem;
+        }
+
+        @media screen and (max-width: 768px) {
+    .container {
+        margin-top: -220px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .halo-image {
+        max-width: 320px;
+        top: 150px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: -10px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .burned, .buy-button {
+        width: 65%;
+        margin: 1px;
+        gap: 10px;
+
+    }
+
+    .burned-amount {
+        font-size: 1.5rem;
+        margin-bottom: -3px;
+    }
+
+    .burned-text {
+        font-size: 0.9rem;
+    }
+
+    .buy-button a {
+        font-size: 0.9rem;
+    }
+
+    table {
+        min-width: 68%;
+        font-size: 0.8rem;
+    }
+
+    th, td {
+        padding: 3px;
+        text-align: center;
+    }
+
+    td:last-child {
+        text-align: center;
+    }
+
+        .movable-liquidity, .movable-liquidity0 .movable-liquidity1 .movable-liquidity2 .movable-liquidity3 .movable-liquidity4 .movable-liquidity5 {
+        font-size: 0.8rem;
+        left: 0;
+    }
+
+    .top-buttons {
+        top: 5px;
+        right: 5px;
+        z-index: 999999;
+    }
+
+    .top-buttons a {
+        width: 30px;
+        height: 30px;
+        z-index: 999999;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .container {
+        margin-top: -220px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .halo-image {
+        max-width: 300px;
+        top: 150px;
+    }
+
+
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: -10px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .burned, .buy-button {
+        width: 65%;
+        margin: 1px;
+        gap: 10px;
+
+    }
+
+    .burned-amount {
+        font-size: 1.5rem;
+        margin-bottom: -3px;
+    }
+
+    .burned-text {
+        font-size: 0.9rem;
+    }
+
+    .buy-button a {
+        font-size: 0.9rem;
+    }
+
+    table {
+        min-width: 68%;
+        font-size: 0.8rem;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: center;
+    }
+
+    td:last-child {
+        text-align: center;
+    }
+
+        .movable-liquidity, .movable-liquidity0 .movable-liquidity1 .movable-liquidity2 .movable-liquidity3 .movable-liquidity4 .movable-liquidity5 {
+        font-size: 0.8rem;
+        left: 0;
+    }
+
+    .top-buttons {
+        top: 5px;
+        right: 5px;
+        z-index: 999999;
+    }
+
+    .top-buttons a {
+        width: 30px;
+        height: 30px;
+        z-index: 999999;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .container {
+        margin-top: -220px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .halo-image {
+        max-width: 290px;
+        top: 150px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: -10px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .burned, .buy-button {
+        width: 65%;
+        margin: 1px;
+        gap: 10px;
+
+    }
+
+    .burned-amount {
+        font-size: 1.5rem;
+        margin-bottom: -3px;
+    }
+
+    .burned-text {
+        font-size: 0.9rem;
+    }
+
+    .buy-button a {
+        font-size: 0.9rem;
+    }
+
+    table {
+         min-width: 68%;
+        font-size: 0.8rem;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: center;
+    }
+
+    td:last-child {
+        text-align: center;
+    }
+
+    .movable-liquidity, .movable-liquidity0 .movable-liquidity1 .movable-liquidity2 .movable-liquidity3 .movable-liquidity4 .movable-liquidity5 {
+        font-size: 0.8rem;
+        left: 0;
+    }
+
+    .top-buttons {
+        top: 5px;
+        right: 5px;
+        z-index: 999999;
+    }
+
+    .top-buttons a {
+        width: 30px;
+        height: 30px;
+        z-index: 999999;
+    }
+}
+
+    </style>
+</head>
+<body>
+      <div class="theme-buttons">
+                <a id="light-theme-button"></a>
+                <a id="dark-theme-button"></a>
+            </div>
+        </div>
+
+    <div class="top-buttons">
+        <a href="https://dexscreener.com/ton/eqdranlglgdis5m-ohcer6zkqpvwkkmhmkryfunjcix2ajet" class="button1" title="Button 1"></a>
+        <a href="https://t.me/holycointon" class="button2" title="Button 2"></a>
+        <a href="https://x.com/HolyCoinTon" class="button3" title="Button 3"></a>
+    </div>
+      <div class="container">
+        <div class="header">
+            <img src="../static/1.png" alt="HOLY Halo" class="halo-image">
+        </div>
+        <div class="main-content">
+            <h1>HOLY</h1>
+            <p>Holy is PoL (Proof-of-Liquidity) token on TON</p>
+            <div class="info">
+                <div class="burned">
+                    <span class="burned-amount">Loading...</span>
+                    <span class="burned-text">$HOLY BURNED</span>
+
+                </div>
+                <div class="buy-button">
+                    <a href="https://dedust.io/swap/TON/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ?amount=10000000000" target="_blank">Buy on DeDust.io <img src="../static/dedust-icon.png" alt="DeDust Icon"></a>
+                </div>
+            </div>
+            <div class="liquidity">
+                <table>
+                    <tr>
+                        <td><td1>Pair</td1></td>
+                        <td><td1>Liquidity</td1></td>
+                        <td><td1>Link</td1></td>
+                    </tr>
+                    <tr>
+                        <td><div class="movable-liquidity0">HOLY/TON</div></td>
+                        <td><div class="movable-liquidity">Loading...</div></td>
+                        <td><a href="https://dedust.io/swap/TON/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ"><u>Link</u></a></td>
+                    </tr>
+                    <tr>
+                        <td><div class="movable-liquidity0">HOLY/HYDRA</div></td>
+                        <td><div class="movable-liquidity3">Loading...</div></td>
+                        <td><a href="https://dedust.io/swap/EQD4P32U10snNoIavoq6cYPTQR82ewAjO20epigrWRAup54_/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ"><u>Link</u></a></td>
+                    </tr>
+                     <tr>
+                        <td><div class="movable-liquidity0">HOLY/USD₮</div></td>
+                        <td><div class="movable-liquidity1">Loading...</div></td>
+                        <td><a href="https://dedust.io/swap/EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ"><u>Link</u></a></td>
+                    </tr>
+                     <tr>
+                        <td><div class="movable-liquidity0">HOLY/RAFF</div></td>
+                        <td><div class="movable-liquidity2">Loading...</div></td>
+                        <td><a href="https://dedust.io/swap/EQCJbp0kBpPwPoBG-U5C-cWfP_jnksvotGfArPF50Q9Qiv9h/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ"><u>Link</u></a></td>
+                    </tr>
+                     <tr>
+                        <td><div class="movable-liquidity0">HOLY/REBA</div></td>
+                        <td><div class="movable-liquidity4">Loading...</div></td>
+                        <td><a href="https://dedust.io/swap/EQBYk9Rp8jgFmxE6XIIOiPJSxObAwt6DdThRdTP7t3JQhcTz/EQAWVv2x6txoc5Nel9CltbfYSBMOOf0R9sb7GnqY-4ncmjcQ"><u>Link</u></a></td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
